@@ -71,7 +71,7 @@ public class RobotMap {
         driveRobotDrive41.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         driveRobotDrive41.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
         shooterShooterServo = new Servo(10);
-        LiveWindow.addActuator("Shooter", "Shooter Servo ", shooterShooterServo);
+        LiveWindow.addActuator("Shooter", "Shooter Servo", shooterShooterServo);
         
         shooterShooterMotor = new Talon(5);
         LiveWindow.addActuator("Shooter", "Shooter Motor", (Talon) shooterShooterMotor);
