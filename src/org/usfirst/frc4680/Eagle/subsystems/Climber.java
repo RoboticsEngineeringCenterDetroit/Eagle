@@ -13,9 +13,7 @@ package org.usfirst.frc4680.Eagle.subsystems;
 
 import org.usfirst.frc4680.Eagle.RobotMap;
 import org.usfirst.frc4680.Eagle.commands.*;
-import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Talon;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
