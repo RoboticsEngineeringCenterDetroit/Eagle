@@ -108,11 +108,11 @@ Children:
     - Children: []
       Properties:
         Output Channel (PWM): !!robotbuilder.data.properties.ChoicesProperty
-          choices: &id009 ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
-            '11', '12', '13', '14', '15', '16', '17', '18', '19']
+          choices: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11',
+            '12', '13', '14', '15', '16', '17', '18', '19']
           default: '0'
           name: Output Channel (PWM)
-          validators: &id010 [PWMOutput]
+          validators: [PWMOutput]
           value: '10'
       Base: Servo
       Name: Shooter Servo
@@ -224,25 +224,31 @@ Children:
           default: Talon
           name: Type
           validators: null
-          value: Talon
+          value: Spark
         Output Channel (PWM): !!robotbuilder.data.properties.ChoicesProperty
           choices: *id005
           default: '0'
           name: Output Channel (PWM)
           validators: *id006
-          value: '7'
+          value: '0'
       Base: Speed Controller
-      Name: ClimberMotor
+      Name: ClimberMotor1
     - Children: []
       Properties:
+        Type: !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id004
+          default: Talon
+          name: Type
+          validators: null
+          value: Spark
         Output Channel (PWM): !!robotbuilder.data.properties.ChoicesProperty
-          choices: *id009
+          choices: *id005
           default: '0'
           name: Output Channel (PWM)
-          validators: *id010
-          value: '8'
-      Base: Servo
-      Name: RopeGripperServo
+          validators: *id006
+          value: '1'
+      Base: Speed Controller
+      Name: ClimberMotor2
     Properties:
       Default command parameters: !!robotbuilder.data.properties.ParametersProperty
         default: []
@@ -250,7 +256,7 @@ Children:
         validators: null
         value: []
       Default Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
-        name: Default Command, type: Command, validators: null, value: None}
+        name: Default Command, type: Command, validators: null, value: ClimbCommand}
       Constants: !!robotbuilder.data.properties.ConstantsProperty
         default: []
         name: Constants
@@ -265,13 +271,23 @@ Children:
   - Children: []
     Properties:
       Number: !!robotbuilder.data.properties.ChoicesProperty
-        choices: ['0', '1', '2', '3', '4', '5']
+        choices: &id009 ['0', '1', '2', '3', '4', '5']
         default: 1
         name: Number
-        validators: [Joystick]
+        validators: &id010 [Joystick]
         value: '0'
     Base: Joystick
     Name: driveJoystick
+  - Children: []
+    Properties:
+      Number: !!robotbuilder.data.properties.ChoicesProperty
+        choices: *id009
+        default: 1
+        name: Number
+        validators: *id010
+        value: '1'
+    Base: Joystick
+    Name: climbShootHarvestJoystick
   Properties: {}
   Base: OI
   Name: Operator Interface
@@ -286,10 +302,10 @@ Children:
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Requires, type: Subsystem, validators: null, value: None}
       Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
-        default: &id011 []
+        default: []
         name: Parameter presets
         validators: null
-        value: *id011
+        value: []
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
     Base: Command
@@ -304,14 +320,32 @@ Children:
       Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Requires, type: Subsystem, validators: null, value: Drive}
       Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
-        default: &id012 []
+        default: []
         name: Parameter presets
         validators: null
-        value: *id012
+        value: []
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
     Base: Command
     Name: tankDrive
+  - Children: []
+    Properties:
+      Parameters: !!robotbuilder.data.properties.ParametersProperty
+        default: []
+        name: Parameters
+        validators: null
+        value: []
+      Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
+        name: Requires, type: Subsystem, validators: null, value: Climber}
+      Parameter presets: !!robotbuilder.data.properties.ParameterSetProperty
+        default: []
+        name: Parameter presets
+        validators: null
+        value: []
+      Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
+        name: Button on SmartDashboard, validators: null, value: true}
+    Base: Command
+    Name: ClimbCommand
   Properties: {}
   Base: Commands
   Name: Commands
