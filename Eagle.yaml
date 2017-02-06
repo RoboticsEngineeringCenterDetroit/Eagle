@@ -96,7 +96,7 @@ Children:
         validators: null
         value: []
       Default Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
-        name: Default Command, type: Command, validators: null, value: tankDrive}
+        name: Default Command, type: Command, validators: null, value: manualDrive}
       Constants: !!robotbuilder.data.properties.ConstantsProperty
         default: []
         name: Constants
@@ -327,7 +327,7 @@ Children:
       Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
         name: Button on SmartDashboard, validators: null, value: true}
     Base: Command
-    Name: tankDrive
+    Name: manualDrive
   - Children: []
     Properties:
       Parameters: !!robotbuilder.data.properties.ParametersProperty
