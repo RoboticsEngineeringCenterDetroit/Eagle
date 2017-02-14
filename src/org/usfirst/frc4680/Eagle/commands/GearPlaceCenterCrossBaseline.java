@@ -16,6 +16,9 @@ public class GearPlaceCenterCrossBaseline extends CommandGroup {
         // these will run in order.
     		addSequential(new GearPlaceCenter());
     		addSequential(new TimedCommand(5));
+    		addSequential(new DriveDirectionDistance(0, -28.0));
+    		addSequential(new DriveDirectionDistance(-90, 70));
+    		addSequential(new DriveDirectionDistance(0, 60));
 
         // To run multiple commands at the same time,
         // use addParallel()

@@ -78,16 +78,26 @@ public class Drive extends Subsystem {
     	robotDrive41.tankDrive(joystick, 1, joystick, 5, true);
     }
     
+    public double getHeading() {
+		PigeonImu.FusionStatus fusionStatus = new PigeonImu.FusionStatus();    	
+		return imu.GetFusedHeading(fusionStatus);
+    }
+    
+    public double angleDelta(double src, double dest) {
+    		double delta = (dest - src) % 360.0;
+    		if(Math.abs(delta) > 180) {
+    			delta = delta - (Math.signum(delta) * 360);
+    		}
+    		return delta;
+    }
     
     public void driveStraight(double speed, double angle) {
-    		PigeonImu.FusionStatus fusionStatus = new PigeonImu.FusionStatus();    	
-    		double actual_angle = imu.GetFusedHeading(fusionStatus);
     	
     		double [] xyz_dps = new double [3];
 		imu.GetRawGyro(xyz_dps);
 		double currentAngularRate = xyz_dps[2];
     	
-    		double curve = (angle - actual_angle) * kPgain - (currentAngularRate) * kDgain;
+		double curve = angleDelta(getHeading(), angle) * kPgain - (currentAngularRate) * kDgain;
     	
     		robotDrive41.drive(speed, curve);
     }
