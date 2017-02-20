@@ -115,7 +115,8 @@ public class Drive extends Subsystem {
     	
 		double curve = -angleDelta(getHeading(), angle) * kPgain - (currentAngularRate) * kDgain;
     	SmartDashboard.putNumber("drivestraight curve", curve);
-    	robotDrive41.drive(-speed, curve);
+    	
+    		robotDrive41.drive(-speed, curve);
     }
     
    public double getDistance(){
