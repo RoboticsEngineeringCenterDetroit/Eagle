@@ -42,7 +42,7 @@ public class GearPlaceRight extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	startDistance = Robot.drive.getDistance();
-    	turnDistance = startDistance + 94.0;
+    	turnDistance = startDistance + 48.0;
     	finishDistance = turnDistance + 76.0;
     }
 
@@ -50,9 +50,9 @@ public class GearPlaceRight extends Command {
     protected void execute() {
     	double currentDistance = Robot.drive.getDistance();
     	if(currentDistance <= turnDistance) {
-    		Robot.drive.driveStraight(1, 0);
+    		Robot.drive.driveStraight(0.4, 0);
     	} else if(currentDistance <= finishDistance) {
-    		Robot.drive.driveStraight(1 , -60);
+    		Robot.drive.driveStraight(0.5 , 60);
     	}else {
     		Robot.drive.stop();
     	}

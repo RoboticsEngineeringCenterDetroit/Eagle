@@ -1,5 +1,7 @@
 package org.usfirst.frc4680.Eagle.commands;
 
+import org.usfirst.frc4680.Eagle.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.TimedCommand;
@@ -9,17 +11,24 @@ import edu.wpi.first.wpilibj.command.TimedCommand;
  */
 public class GearPlaceCenterCrossBaseline extends CommandGroup {
 
+	
     public GearPlaceCenterCrossBaseline() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
-    		addSequential(new GearPlaceCenter());
+    		System.out.println("DriveDirectionDistance(0.0, 74.0)");
+    		addSequential(new DriveDirectionDistance(0.0, 74.0));
+    		System.out.println("TimedCommand(5)");
     		addSequential(new TimedCommand(5));
+    		System.out.println("DriveDirectionDistance(0, -28.0)");
     		addSequential(new DriveDirectionDistance(0, -28.0));
-    		addSequential(new DriveDirectionDistance(-90, 70));
+    		System.out.println(" DriveDirectionDistance(0, -28.0)");
+    		addSequential(new  DriveDirectionDistance(0, -28.0));
+    		System.out.println("DriveDirectionDistance(0, 60)");
     		addSequential(new DriveDirectionDistance(0, 60));
-
+    		System.out.println("Done!");
+    		
         // To run multiple commands at the same time,
         // use addParallel()
         // e.g. addParallel(new Command1());

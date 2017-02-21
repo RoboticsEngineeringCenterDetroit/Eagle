@@ -53,7 +53,7 @@ public class GearPlaceLeft extends Command {
     	if(currentDistance <= turnDistance) {
     		Robot.drive.driveStraight(1, 0);
     	} else if(currentDistance <= finishDistance) {
-    		Robot.drive.driveStraight(1 , 60);
+    		Robot.drive.driveStraight(1 , -60);
     	}else {
     		Robot.drive.stop();
     	}
@@ -63,7 +63,7 @@ public class GearPlaceLeft extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return Robot.drive.getDistance() >= finishDistance;
     }
 
     // Called once after isFinished returns true
