@@ -17,17 +17,11 @@ public class GearPlaceCenterCrossBaseline extends CommandGroup {
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
-    		System.out.println("DriveDirectionDistance(0.0, 74.0)");
     		addSequential(new DriveDirectionDistance(0.0, 74.0));
-    		System.out.println("TimedCommand(5)");
     		addSequential(new TimedCommand(5));
-    		System.out.println("DriveDirectionDistance(0, -28.0)");
     		addSequential(new DriveDirectionDistance(0, -28.0));
-    		System.out.println(" DriveDirectionDistance(0, -28.0)");
-    		addSequential(new  DriveDirectionDistance(0, -28.0));
-    		System.out.println("DriveDirectionDistance(0, 60)");
+    		addSequential(new DriveDirectionDistance(0, -28.0));
     		addSequential(new DriveDirectionDistance(0, 60));
-    		System.out.println("Done!");
     		
         // To run multiple commands at the same time,
         // use addParallel()

@@ -36,7 +36,6 @@ public class RobotMap {
     public static CANTalon driveLeftFront;
     public static CANTalon driveLeftBack;
     public static RobotDrive driveRobotDrive41;
-    public static Servo shooterShooterServo;
     public static SpeedController shooterShooterMotor;
     public static SpeedController harvesterHarvesterMotor;
     public static Relay harvesterHarvesterSolenoid;
@@ -71,11 +70,9 @@ public class RobotMap {
         driveRobotDrive41.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
         driveRobotDrive41.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         driveRobotDrive41.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
-        shooterShooterServo = new Servo(10);
-        LiveWindow.addActuator("Shooter", "Shooter Servo", shooterShooterServo);
-        
-        shooterShooterMotor = new Talon(5);
-        LiveWindow.addActuator("Shooter", "Shooter Motor", (Talon) shooterShooterMotor);
+         
+        shooterShooterMotor = new Spark(5);
+        LiveWindow.addActuator("Shooter", "Shooter Motor", (Spark) shooterShooterMotor);
         
         harvesterHarvesterMotor = new Talon(6);
         LiveWindow.addActuator("Harvester", "HarvesterMotor", (Talon) harvesterHarvesterMotor);

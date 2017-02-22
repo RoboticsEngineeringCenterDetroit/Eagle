@@ -75,6 +75,7 @@ public class Robot extends IterativeRobot {
         autoChooser.addObject("GearPlaceCenter", new GearPlaceCenter());
         autoChooser.addObject("GearPlaceRight", new GearPlaceRight());
         autoChooser.addObject("GearPlaceLeft", new GearPlaceLeft());
+        autoChooser.addObject("Drive Fifty Inches", new DriveDirectionDistance(0.0, 50.0));
         SmartDashboard.putData("Autonomous mode chooser", autoChooser);
 
         CameraServer.getInstance().startAutomaticCapture();
