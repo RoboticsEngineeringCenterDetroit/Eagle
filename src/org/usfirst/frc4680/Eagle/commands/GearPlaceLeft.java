@@ -43,22 +43,20 @@ public class GearPlaceLeft extends Command {
     protected void initialize() {
     	
     	startDistance = Robot.drive.getDistance();
-    	turnDistance = startDistance + 94.0;
+    	turnDistance = startDistance + 48.0;
     	finishDistance = turnDistance + 76.0;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double currentDistance = Robot.drive.getDistance();
-    	if(currentDistance <= turnDistance) {
-    		Robot.drive.driveStraight(1, 0);
-    	} else if(currentDistance <= finishDistance) {
-    		Robot.drive.driveStraight(1 , -60);
-    	}else {
-    		Robot.drive.stop();
-    	}
-    	
-    	
+	    	double currentDistance = Robot.drive.getDistance();
+	    	if(currentDistance <= turnDistance) {
+	    		Robot.drive.driveStraight(0.4, 0);
+	    	} else if(currentDistance <= finishDistance) {
+	    		Robot.drive.driveStraight(0.5 , -60);
+	    	}else {
+	    		Robot.drive.stop();
+	    	}	
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -68,6 +66,7 @@ public class GearPlaceLeft extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    		Robot.drive.stop();
     }
 
     // Called when another command which requires one or more of the same
