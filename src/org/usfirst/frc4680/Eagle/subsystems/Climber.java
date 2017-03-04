@@ -11,6 +11,7 @@
 
 package org.usfirst.frc4680.Eagle.subsystems;
 
+import org.usfirst.frc4680.Eagle.Robot;
 import org.usfirst.frc4680.Eagle.RobotMap;
 import org.usfirst.frc4680.Eagle.commands.*;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -38,8 +39,15 @@ public class Climber extends Subsystem {
     // here. Call these from Commands.
     
     public void climb(double speed) {
+    	if(speed <= 0)
+    	{
     	climberMotor1.set(speed);
     	climberMotor2.set(-speed);
+    	}
+    	else {
+        	climberMotor1.set(0);
+        	climberMotor2.set(0);
+    	}
     }
 
     public void initDefaultCommand() {

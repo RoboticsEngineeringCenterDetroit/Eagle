@@ -23,7 +23,7 @@ public class DriveStraight extends Command {
     // Called once when the command executes
     protected void initialize() {
     	direction = Robot.drive.getHeading();
-    	SmartDashboard.putNumber("drivestraight direction", direction);
+    	//SmartDashboard.putNumber("drivestraight direction", direction);
     }
     
     protected void execute() {

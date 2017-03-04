@@ -48,8 +48,8 @@ public class Drive extends Subsystem {
 
     
     PigeonImu imu;
-    double kPgain = 0.04; /* percent throttle per degree of error */
-	double kDgain = 0.0004; /* percent throttle per angular velocity dps */
+    double kPgain = 0.045; /* percent throttle per degree of error */
+	double kDgain = 0.00045; /* percent throttle per angular velocity dps */
 
     static final double inchesPerEncCount = (18.85 / 4096);
     
@@ -114,7 +114,7 @@ public class Drive extends Subsystem {
 		double currentAngularRate = xyz_dps[2];
     	
 		double curve = -angleDelta(getHeading(), angle) * kPgain - (currentAngularRate) * kDgain;
-    	SmartDashboard.putNumber("drivestraight curve", curve);
+    	//SmartDashboard.putNumber("drivestraight curve", curve);
     	robotDrive41.drive(-speed, rangeLimit(curve));
     }
     
@@ -124,12 +124,12 @@ public class Drive extends Subsystem {
 		//boolean sensorPluggedIn = (FeedbackDeviceStatus.FeedbackStatusPresent == sensorStatus);
 	   int countL = -rightBack.getEncPosition();
 	   int countR = rightFront.getEncPosition();
-	   SmartDashboard.putNumber("countL", countL);
-	   SmartDashboard.putNumber("countR", countR);
+	   //SmartDashboard.putNumber("countL", countL);
+	   //SmartDashboard.putNumber("countR", countR);
 	  
 	   double dist =  (countL + countR)/2 * inchesPerEncCount;
-	   SmartDashboard.putNumber("distance", dist);
-	   SmartDashboard.putNumber("heading", getHeading());
+	   //SmartDashboard.putNumber("distance", dist);
+	   //SmartDashboard.putNumber("heading", getHeading());
 	   return dist;
    }
    

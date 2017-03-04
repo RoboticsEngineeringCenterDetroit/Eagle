@@ -47,7 +47,7 @@ public class GearPlaceCenter extends Command {
     	startDistance = Robot.drive.getDistance();
     	
     	finishDistance = startDistance + 71;
-    	SmartDashboard.putNumber("finish Distance", finishDistance);
+    	//SmartDashboard.putNumber("finish Distance", finishDistance);
     	
     }
 
