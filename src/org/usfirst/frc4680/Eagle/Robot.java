@@ -72,9 +72,9 @@ public class Robot extends IterativeRobot {
         
         autoChooser = new SendableChooser<Command>();
         //autoChooser.addDefault("GearPlaceCenterCrossBaseline", new GearPlaceCenterCrossBaseline());
-        autoChooser.addDefault("GearPlaceCenter", new GearPlaceCenter());
+        autoChooser.addObject("GearPlaceCenter", new GearPlaceCenter());
         autoChooser.addObject("GearPlaceRight", new GearPlaceRight());
-        autoChooser.addObject("GearPlaceLeft", new GearPlaceLeft());
+        autoChooser.addDefault("GearPlaceLeft", new GearPlaceLeft());
         autoChooser.addObject("Drive Fifty Inches", new DriveDirectionDistance(0.0, 50.0));
         SmartDashboard.putData("Autonomous mode chooser", autoChooser);
 

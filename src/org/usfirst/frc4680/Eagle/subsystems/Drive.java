@@ -48,9 +48,8 @@ public class Drive extends Subsystem {
 
     
     PigeonImu imu;
-    double kPgain = 0.045; /* percent throttle per degree of error */
-	double kDgain = 0.00045; /* percent throttle per angular velocity dps */
-
+    double kPgain = 0.008; /* percent throttle per degree of error */
+    double kDgain = 0.0004; /* percent throttle per angular velocity dps */
     static final double inchesPerEncCount = (18.85 / 4096);
     
     // Put methods for controlling this subsystem
@@ -66,9 +65,9 @@ public class Drive extends Subsystem {
     		//rightFront.reverseSensor(true);
     		
     		// left side encoder
-    		rightBack.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-    		rightBack.setEncPosition(0);
-    		//rightBack.reverseSensor(false);    		
+    		leftFront.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+    		leftFront.setEncPosition(0);
+    		//leftFront.reverseSensor(false);   
     }
 
 	public void initDefaultCommand() {
@@ -91,7 +90,7 @@ public class Drive extends Subsystem {
     public void resetEncoderPosition()
     {
 		rightFront.setEncPosition(0);
-		rightBack.setEncPosition(0);
+		leftFront.setEncPosition(0);
     }
     
     public double getHeading() {
@@ -107,22 +106,20 @@ public class Drive extends Subsystem {
     		return delta;
     }
     
-    public void driveStraight(double speed, double angle) {
-    	
+    public void driveStraight(double speed, double angle) { 	
     	double [] xyz_dps = new double [3];
 		imu.GetRawGyro(xyz_dps);
 		double currentAngularRate = xyz_dps[2];
-    	
 		double curve = -angleDelta(getHeading(), angle) * kPgain - (currentAngularRate) * kDgain;
     	//SmartDashboard.putNumber("drivestraight curve", curve);
     	robotDrive41.drive(-speed, rangeLimit(curve));
     }
-    
-   public double getDistance(){
+       
+    public double getDistance(){
 	   
 		//FeedbackDeviceStatus sensorStatus = rightFront.isSensorPresent(FeedbackDevice.CtreMagEncoder_Relative);
 		//boolean sensorPluggedIn = (FeedbackDeviceStatus.FeedbackStatusPresent == sensorStatus);
-	   int countL = -rightBack.getEncPosition();
+	   int countL = -leftFront.getEncPosition();
 	   int countR = rightFront.getEncPosition();
 	   //SmartDashboard.putNumber("countL", countL);
 	   //SmartDashboard.putNumber("countR", countR);
