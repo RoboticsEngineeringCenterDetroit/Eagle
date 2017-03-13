@@ -17,6 +17,7 @@ import org.usfirst.frc4680.Eagle.commands.*;
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.FeedbackDeviceStatus;
+import com.ctre.CANTalon.TalonControlMode;
 import com.ctre.PigeonImu;
 
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -50,6 +51,8 @@ public class Drive extends Subsystem {
     PigeonImu imu;
     double kPgain = 0.008; /* percent throttle per degree of error */
     double kDgain = 0.0004; /* percent throttle per angular velocity dps */
+	
+	final double maxRPM = 1500;
     static final double inchesPerEncCount = (18.85 / 4096);
     
     // Put methods for controlling this subsystem
@@ -62,12 +65,36 @@ public class Drive extends Subsystem {
     		// right side encoder
     		rightFront.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
     		rightFront.setEncPosition(0);
-    		//rightFront.reverseSensor(true);
+    		rightFront.reverseSensor(false);
+    		rightFront.configNominalOutputVoltage(+0.0f, -0.0f);
+    		rightFront.configPeakOutputVoltage(+12.0f, -12.0f);
+    		rightFront.setProfile(0);
+    		rightFront.setF(0.1097);
+    		rightFront.setP(0.22);
+    		rightFront.setI(0);
+    		rightFront.setD(0);
+    		rightFront.changeControlMode(TalonControlMode.Speed);
+
+    		rightBack.changeControlMode(TalonControlMode.Follower);
+    		rightBack.set(rightFront.getDeviceID());
     		
     		// left side encoder
     		leftFront.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
     		leftFront.setEncPosition(0);
-    		//leftFront.reverseSensor(false);   
+    		leftFront.reverseSensor(true);   
+    		leftFront.configNominalOutputVoltage(+0.0f, -0.0f);
+    		leftFront.configPeakOutputVoltage(+12.0f, -12.0f);
+    		leftFront.setProfile(0);
+    		leftFront.setF(0.1097);
+    		leftFront.setP(0.22);
+    		leftFront.setI(0);
+    		leftFront.setD(0);
+    		leftFront.changeControlMode(TalonControlMode.Speed);
+    		
+    		leftBack.changeControlMode(TalonControlMode.Follower);
+    		leftBack.set(leftFront.getDeviceID());
+    		
+    		robotDrive41.setMaxOutput(maxRPM);
     }
 
 	public void initDefaultCommand() {
