@@ -50,10 +50,10 @@ public class RobotMap {
         driveRightFront = new CANTalon(3);
         LiveWindow.addActuator("Drive", "Right Front", driveRightFront);
         
-        driveRightBack = new CANTalon(4);
+        driveRightBack = new CANTalon(1);
         LiveWindow.addActuator("Drive", "Right Back", driveRightBack);
         
-        driveLeftFront = new CANTalon(1);
+        driveLeftFront = new CANTalon(4);
         LiveWindow.addActuator("Drive", "Left Front", driveLeftFront);
         
         driveLeftBack = new CANTalon(2);

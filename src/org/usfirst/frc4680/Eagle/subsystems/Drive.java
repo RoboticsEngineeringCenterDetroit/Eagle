@@ -49,10 +49,14 @@ public class Drive extends Subsystem {
 
     
     PigeonImu imu;
-    double kPgain = 0.008; /* percent throttle per degree of error */
-    double kDgain = 0.0004; /* percent throttle per angular velocity dps */
+    double kPgain =  0.080; /* percent throttle per degree of error */
+    double kDgain = -0.015; /* percent throttle per angular velocity dps */
+    double kIgain = 0.0; /* percent throttle per angular velocity dps */
+	double bias = 0.0;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+	double angleDeltaValue = 0;
 	
 	final double maxRPM = 1500;
+	
     static final double inchesPerEncCount = (18.85 / 4096);
     
     // Put methods for controlling this subsystem
@@ -65,36 +69,36 @@ public class Drive extends Subsystem {
     		// right side encoder
     		rightFront.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
     		rightFront.setEncPosition(0);
-    		rightFront.reverseSensor(false);
-    		rightFront.configNominalOutputVoltage(+0.0f, -0.0f);
-    		rightFront.configPeakOutputVoltage(+12.0f, -12.0f);
-    		rightFront.setProfile(0);
-    		rightFront.setF(0.1097);
-    		rightFront.setP(0.22);
-    		rightFront.setI(0);
-    		rightFront.setD(0);
-    		rightFront.changeControlMode(TalonControlMode.Speed);
-
-    		rightBack.changeControlMode(TalonControlMode.Follower);
-    		rightBack.set(rightFront.getDeviceID());
+//    		rightFront.reverseSensor(true);
+//    		rightFront.configNominalOutputVoltage(+0.0f, -0.0f);
+//    		rightFront.configPeakOutputVoltage(+12.0f, -12.0f);
+//    		rightFront.setProfile(0);
+//    		rightFront.setF(0.1097);
+//    		rightFront.setP(0.22);
+//    		rightFront.setI(0);
+//    		rightFront.setD(0);
+//    		rightFront.changeControlMode(TalonControlMode.Speed);
+//
+//    		rightBack.changeControlMode(TalonControlMode.Follower);
+//    		rightBack.set(rightFront.getDeviceID());
     		
     		// left side encoder
     		leftFront.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
     		leftFront.setEncPosition(0);
-    		leftFront.reverseSensor(true);   
-    		leftFront.configNominalOutputVoltage(+0.0f, -0.0f);
-    		leftFront.configPeakOutputVoltage(+12.0f, -12.0f);
-    		leftFront.setProfile(0);
-    		leftFront.setF(0.1097);
-    		leftFront.setP(0.22);
-    		leftFront.setI(0);
-    		leftFront.setD(0);
-    		leftFront.changeControlMode(TalonControlMode.Speed);
-    		
-    		leftBack.changeControlMode(TalonControlMode.Follower);
-    		leftBack.set(leftFront.getDeviceID());
-    		
-    		robotDrive41.setMaxOutput(maxRPM);
+//    		leftFront.reverseSensor(false);   
+//    		leftFront.configNominalOutputVoltage(+0.0f, -0.0f);
+//    		leftFront.configPeakOutputVoltage(+12.0f, -12.0f);
+//    		leftFront.setProfile(0);
+//    		leftFront.setF(0.1097);
+//    		leftFront.setP(0.22);
+//    		leftFront.setI(0);
+//    		leftFront.setD(0);
+//    		leftFront.changeControlMode(TalonControlMode.Speed);
+//    		
+//    		leftBack.changeControlMode(TalonControlMode.Follower);
+//    		leftBack.set(leftFront.getDeviceID());
+//    		
+//    		robotDrive41.setMaxOutput(maxRPM);
     }
 
 	public void initDefaultCommand() {
@@ -133,13 +137,41 @@ public class Drive extends Subsystem {
     		return delta;
     }
     
+    public boolean turnTo(double destAngle) {
+    	double tolerance = 2.0;
+    	double currentAngle = getHeading();
+    	System.out.println("destAngle " + destAngle + " currentAngle " + currentAngle);
+    	
+    	if(destAngle - currentAngle > tolerance){
+    		System.out.println("turn left");
+    		robotDrive41.tankDrive(0.6, -0.6);
+    		return false;
+    	}else if(destAngle - currentAngle < -tolerance) {
+    		System.out.println("turn right");
+    		robotDrive41.tankDrive(-0.6,  0.6);
+    		return false;
+    	}else {
+    		robotDrive41.tankDrive(0,  0);
+    		return true;
+    	}
+    }
+    
     public void driveStraight(double speed, double angle) { 	
     	double [] xyz_dps = new double [3];
 		imu.GetRawGyro(xyz_dps);
 		double currentAngularRate = xyz_dps[2];
-		double curve = -angleDelta(getHeading(), angle) * kPgain - (currentAngularRate) * kDgain;
-    	//SmartDashboard.putNumber("drivestraight curve", curve);
+		angleDeltaValue =	angleDelta(getHeading(), angle);
+
+		kPgain =  0.080; /* percent throttle per degree of error */
+		kDgain =  -0.015; /* percent throttle per angular velocity dps */
+			
+		double curve = -angleDelta(getHeading(), angle) * kPgain - (currentAngularRate) * kDgain - bias;
     	robotDrive41.drive(-speed, rangeLimit(curve));
+    	
+    	//SmartDashboard.putNumber("curve", curve);
+    	//SmartDashboard.putNumber("command Angle", angle);
+    	SmartDashboard.putNumber("actual Angle", (int)getHeading());
+       	//SmartDashboard.putNumber("angular rate", currentAngularRate);  
     }
        
     public double getDistance(){

@@ -11,6 +11,8 @@
 
 package org.usfirst.frc4680.Eagle.commands;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc4680.Eagle.Robot;
 
 /**
@@ -43,6 +45,8 @@ public class manualDrive extends Command {
     protected void execute() {
     	Robot.drive.driver(Robot.oi.getdriveJoystick());
     	Robot.drive.getDistance();
+        SmartDashboard.putNumber("Heading", Robot.drive.getHeading());
+        SmartDashboard.putNumber("Distance", Robot.drive.getDistance());
     }
 
     // Make this return true when this Command no longer needs to run execute()
