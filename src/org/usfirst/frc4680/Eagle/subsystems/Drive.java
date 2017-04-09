@@ -11,6 +11,7 @@
 
 package org.usfirst.frc4680.Eagle.subsystems;
 
+import org.usfirst.frc4680.Eagle.Robot;
 import org.usfirst.frc4680.Eagle.RobotMap;
 import org.usfirst.frc4680.Eagle.commands.*;
 
@@ -189,5 +190,6 @@ public class Drive extends Subsystem {
    public double rangeLimit(double value) {
 	   return Math.max(-1.0, Math.min(1.0, value));
    }
+   
 }
 
