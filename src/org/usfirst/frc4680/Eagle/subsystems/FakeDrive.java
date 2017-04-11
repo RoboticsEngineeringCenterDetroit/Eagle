@@ -20,7 +20,7 @@ public class FakeDrive extends Subsystem {
     private double dist;
 
     public FakeDrive() {
-    		robotDrive41 = new RobotDrive(7, 8);
+    		robotDrive41 = new RobotDrive(9, 10);
     		heading = 0.0;
     		dist = 0.0;
     }
@@ -58,15 +58,15 @@ public class FakeDrive extends Subsystem {
     public boolean turnTo(double destAngle) {
 	    	double tolerance = 2.0;
 	    	double currentAngle = getHeading();
-	    	System.out.println("destAngle " + destAngle + " currentAngle " + currentAngle);
+	    	//System.out.println("destAngle " + destAngle + " currentAngle " + currentAngle);
 	    	
 	    	if(destAngle - currentAngle > tolerance){
-	    		System.out.println("turn left");
+	    		//System.out.println("turn left");
 	    		robotDrive41.tankDrive(0.6, -0.6);
 	    		heading += 1.0;
 	    		return false;
 	    	}else if(destAngle - currentAngle < -tolerance) {
-	    		System.out.println("turn right");
+	    		//System.out.println("turn right");
 	    		robotDrive41.tankDrive(-0.6,  0.6);
 	    		heading -= 1.0;
 	    		return false;

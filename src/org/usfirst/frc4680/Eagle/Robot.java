@@ -13,6 +13,7 @@ package org.usfirst.frc4680.Eagle;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -26,6 +27,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.usfirst.frc4680.Eagle.commands.*;
 import org.usfirst.frc4680.Eagle.subsystems.*;
@@ -43,27 +45,8 @@ public class Robot extends IterativeRobot {
     SendableChooser<Command> autoChooser;
     
     final static String logFileName = "/home/lvuser/logfile.csv";
-    
-    class LogEntryStruct {
-    		public double timestamp;
-    		public double heading;
-    		public double encoderCountLeft;
-    		public double encoderCountRight;
-    		public double voltageLeft;
-    		public double voltageRight;
-    		
-    		public String toString() {
-    			return String.format("%f, %f, %d, %d, %f, %f",
-    					           timestamp, heading,
-    					           encoderCountLeft, encoderCountRight,
-    					           voltageLeft, voltageRight);
-    		}
-    		
-    		public static final String header = "timestamp, heading, encoderCountLeft, encoderCountRight, voltageLeft, voltageRight";
-    }
-    
-    private LogEntryStruct logEntry;
-    private ArrayList<LogEntryStruct> datalog;
+    private HashMap<String, Object> logEntry;
+    private ArrayList<HashMap<String, Object>> dataLog;
 
     public static OI oi;
     public static Drive drive;
@@ -78,6 +61,9 @@ public class Robot extends IterativeRobot {
     public static DigitalInput camera_centered;
     public static DigitalInput camera_turn_right;
 
+    public Robot() {
+    		dataLog = new ArrayList<HashMap<String, Object>>();
+    }
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -125,13 +111,13 @@ public class Robot extends IterativeRobot {
      * You can use it to reset subsystems before shutting down.
      */
     public void disabledInit(){
-    		if(!datalog.isEmpty()) {
-    			System.out.println("Writing " + datalog.size() + " records to log file");
+    		if(!dataLog.isEmpty()) {
+    			System.out.println("Writing " + dataLog.size() + " records to log file");
     			try { 
-    				PrintStream file = new PrintStream(logFileName); 
-    				file.println(LogEntryStruct.header);
-    			    for(LogEntryStruct entry : datalog){
-        				file.println(entry);
+    				PrintStream file = new PrintStream(logFileName);
+    				file.println(dataLog.get(0).keySet());
+    			    for(HashMap<String, Object> entry : dataLog){
+        				file.println(entry.values());
         			} 
     			    file.flush(); 
     			    file.close(); 
@@ -139,7 +125,7 @@ public class Robot extends IterativeRobot {
     			} catch (IOException e) { 
     			    System.out.println("error: " + e.getMessage()); 
     			}
-    			datalog.clear();
+    			dataLog.clear();
     		}
     }
 
@@ -165,15 +151,20 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-        logEntry = new LogEntryStruct();
-        logEntry.timestamp = Timer.getFPGATimestamp();
+//        logEntry = new HashMap<String, Object>();
+//        logEntry.put("timestamp", Timer.getFPGATimestamp());
+//        logEntry.put("matchtime", DriverStation.getInstance().getMatchTime());
         Scheduler.getInstance().run();
-        logEntry.heading = drive.getHeading();
-        logEntry.encoderCountLeft = RobotMap.driveLeftFront.getEncPosition();
-        logEntry.encoderCountRight = RobotMap.driveRightFront.getEncPosition();
-        logEntry.voltageLeft = RobotMap.driveLeftFront.getOutputVoltage();
-        logEntry.voltageRight = RobotMap.driveRightFront.getOutputVoltage();
-        datalog.add(logEntry);
+//        logEntry.put("heading", drive.getHeading());
+//        logEntry.put("distance", drive.getDistance());
+//        logEntry.put("turn_left", Robot.camera_turn_left.get());
+//        logEntry.put("centered", Robot.camera_centered.get());
+//        logEntry.put("turn_right", Robot.camera_turn_right.get());
+//        logEntry.encoderCountLeft = RobotMap.driveLeftFront.getEncPosition();
+//        logEntry.encoderCountRight = RobotMap.driveRightFront.getEncPosition();
+//        logEntry.voltageLeft = RobotMap.driveLeftFront.getOutputVoltage();
+//        logEntry.voltageRight = RobotMap.driveRightFront.getOutputVoltage();
+//        dataLog.add(logEntry);
     }
 
     public void teleopInit() {
