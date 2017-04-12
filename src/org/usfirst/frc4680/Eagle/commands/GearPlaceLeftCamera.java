@@ -49,44 +49,48 @@ public class GearPlaceLeftCamera extends Command {
 		double currentDistance = Robot.drive.getDistance();
 
 		switch(step) {
-		case 0:
+		case 0: // drive straight, first segment
 			Robot.drive.driveStraight(drive_speed, 0);
 			if(currentDistance > turnDistance) {
-				System.out.println("step 1");
+				System.out.println("finished first segment");
 				step = 1;
 			}
 			break;
 
-		case 1:
+		case 1: // turn to face airship
 			boolean doneTurning = Robot.drive.turnTo(heading);
 			if(doneTurning){
-				System.out.println("step 2");
-				step = 4;
+				System.out.println("done turning");
+				step = 2;
 			}
 			break;
 
-		case 2:
+		case 2: // turn left to find target
 			if(DriverStation.getInstance().getMatchTime() < time_limit) {
 				Robot.drive.stop();
+				System.out.println("time's up!");
 				step = 4;
 			} else if(Robot.camera_turn_left.get()) {
 				Robot.drive.robotDrive41.tankDrive(0, turn_speed);
 			} else if(Robot.camera_centered.get()) {
 				heading = Robot.drive.getHeading();
+				System.out.println("locked on target. heading = " + heading);
 				Robot.drive.stop();
 				step = 4;
 			} else if(Robot.camera_turn_right.get()) {
+				System.out.println("i see the target to the right");
 				turn_speed *= 0.9;
 				heading = Robot.drive.getHeading();
 				step = 3;
 			} else {
-				step = 4;
+				System.out.println("looking for target...");
 			}
 			break;
 
-		case 3:
+		case 3: // turn right to find target
 			if(DriverStation.getInstance().getMatchTime() < time_limit) {
 				Robot.drive.stop();
+				System.out.println("time's up!");
 				step = 4;
 			} else if(Robot.camera_turn_right.get()) {
 				Robot.drive.robotDrive41.tankDrive(turn_speed, 0);
@@ -95,22 +99,23 @@ public class GearPlaceLeftCamera extends Command {
 				Robot.drive.stop();
 				step = 4;
 			} else if(Robot.camera_turn_left.get()) {
+				System.out.println("i see the target to the left");
 				turn_speed *= 0.9;
 				heading = Robot.drive.getHeading();
 				step = 2;
 			} else {
-				step = 4;
+				System.out.println("looking for target...");
 			}
 			break;
 
-		case 4:
+		case 4: // drive forward second segment
 			Robot.drive.driveStraight(drive_speed, heading);
 			if(currentDistance > finishDistance){
 				step = 5;
 			}
 			break;
 
-		case 5 :
+		case 5 : // creep forward to stay pressed against airship
 			Robot.drive.driveStraight(0.10, heading);
 			if(currentDistance > extraDistance){
 				step = 6;
