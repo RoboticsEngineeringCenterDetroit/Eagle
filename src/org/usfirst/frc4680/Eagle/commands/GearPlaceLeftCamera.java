@@ -82,9 +82,11 @@ public class GearPlaceLeftCamera extends Command {
 				System.out.println("i see the target to the right. heading = " + Robot.drive.getHeading());
 				turn_speed *= 0.9;
 				heading = Robot.drive.getHeading();
+				Robot.drive.stop();
 				step = 3;
 			} else {
 				System.out.println("looking for target...");
+				Robot.drive.stop();
 			}
 			break;
 
@@ -104,9 +106,11 @@ public class GearPlaceLeftCamera extends Command {
 				System.out.println("i see the target to the left. heading = " + Robot.drive.getHeading());
 				turn_speed *= 0.9;
 				heading = Robot.drive.getHeading();
+				Robot.drive.stop();
 				step = 2;
 			} else {
 				System.out.println("looking for target...");
+				Robot.drive.stop();
 			}
 			break;
 
