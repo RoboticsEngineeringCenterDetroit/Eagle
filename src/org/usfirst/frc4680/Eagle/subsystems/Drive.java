@@ -142,14 +142,14 @@ public class Drive extends Subsystem {
     public boolean turnTo(double destAngle) {
     	double tolerance = 2.0;
     	double currentAngle = getHeading();
-    	System.out.println("destAngle " + destAngle + " currentAngle " + currentAngle);
+    	//System.out.println("destAngle " + destAngle + " currentAngle " + currentAngle);
     	
     	if(destAngle - currentAngle > tolerance){
-    		System.out.println("turn left");
+    		//System.out.println("turn left");
     		robotDrive41.tankDrive(0.6, -0.6);
     		return false;
     	}else if(destAngle - currentAngle < -tolerance) {
-    		System.out.println("turn right");
+    		//System.out.println("turn right");
     		robotDrive41.tankDrive(-0.6,  0.6);
     		return false;
     	}else {

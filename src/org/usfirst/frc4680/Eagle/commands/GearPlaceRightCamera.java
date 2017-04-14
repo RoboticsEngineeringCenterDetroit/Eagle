@@ -17,7 +17,7 @@ import org.usfirst.frc4680.Eagle.Robot;
 /**
  *
  */
-public class GearPlaceLeftCamera extends Command {
+public class GearPlaceRightCamera extends Command {
 
 	private static final double drive_speed = 0.45;
 	private static final double time_limit = 10.0;
@@ -29,7 +29,7 @@ public class GearPlaceLeftCamera extends Command {
 	double turn_speed;
 	int step;
 
-	public GearPlaceLeftCamera() {
+	public GearPlaceRightCamera() {
 		requires(Robot.drive);
 		step = 0;
 	}
@@ -40,7 +40,7 @@ public class GearPlaceLeftCamera extends Command {
 		turnDistance = startDistance + 78.0;
 		finishDistance = turnDistance + 40.0;
 		extraDistance = finishDistance + 10.0;
-		heading = -70;
+		heading = 70;
 		turn_speed = 0.6;
 	}
 
