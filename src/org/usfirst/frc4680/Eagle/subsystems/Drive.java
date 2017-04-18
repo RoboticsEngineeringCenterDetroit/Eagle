@@ -56,6 +56,8 @@ public class Drive extends Subsystem {
 	double bias = 0.0;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
 	double angleDeltaValue = 0;
 	
+	double headingOffset;
+	
 	final double maxRPM = 1500;
 	
     static final double inchesPerEncCount = (18.85 / 4096);
@@ -66,6 +68,7 @@ public class Drive extends Subsystem {
     public Drive() {
     		imu = new PigeonImu(leftBack);
     		imu.SetFusedHeading(0.0);
+    		headingOffset = 0.0;
     		
     		// right side encoder
     		rightFront.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
@@ -125,9 +128,14 @@ public class Drive extends Subsystem {
 		leftFront.setEncPosition(0);
     }
     
+    public void resetHeading() {
+    		PigeonImu.FusionStatus fusionStatus = new PigeonImu.FusionStatus();
+    		headingOffset = imu.GetFusedHeading(fusionStatus);
+    }
+    
     public double getHeading() {
 		PigeonImu.FusionStatus fusionStatus = new PigeonImu.FusionStatus();    	
-		return imu.GetFusedHeading(fusionStatus);
+		return imu.GetFusedHeading(fusionStatus) - headingOffset;
     }
     
     public double angleDelta(double src, double dest) {

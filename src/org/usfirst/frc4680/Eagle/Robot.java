@@ -128,7 +128,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void autonomousInit() {
-    	
+    	Robot.drive.resetHeading();
     	//autonomousCommand = new GearPlaceCenter(); 
     	//autonomousCommand = new GearPlaceLeft();
     	autonomousCommand = new GearPlaceLeftCamera();
